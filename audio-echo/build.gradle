@@ -1,19 +1,32 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.android.application'
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle-experimental:0.4.0'
+    android {
+        compileSdkVersion 23
+        buildToolsVersion "23.0.2"
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
+        defaultConfig.with {
+            applicationId "com.google.sample.echo"
+            minSdkVersion 17
+            targetSdkVersion 23
+            versionCode 1
+            versionName "1.0"
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
 
-allprojects {
-    repositories {
-        jcenter()
+//            ndk {
+//                moduleName = "echo"
+//                cppFlags.add("-std=c++11")
+//                ldLibs.addAll(['android', 'log', 'OpenSLES'])
+//                stl     = "gnustl_static"
+//            }
+        }
+
+        buildTypes {
+            release {
+                minifyEnabled=false
+                proguardFiles.add(file('proguard-android.txt'))
+            }
+        }
+        productFlavors {
+            create('all')
+        }
     }
-}

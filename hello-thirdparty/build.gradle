@@ -1,15 +1,57 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    repositories {
-       jcenter()
+apply plugin: 'com.android.application'
+
+
+//def gpg_sdk_path = file(project(':thirdparty:gpg-sdk').projectDir).absolutePath + "/gpg-cpp-sdk/android"
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+
+    defaultConfig {
+        //
+        //  NOTE: change the application ID to match the play console linked application.
+        //
+        applicationId "com.example.android.hello_thirdparty"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+
+//        ndk {
+//            moduleName = "native-activity"
+//            cppFlags.addAll(["-I${file("src/main/jni")}".toString(),
+//                             "-I${gpg_sdk_path}/include".toString()])
+//            stl = "c++_static"
+//            ldLibs.addAll(["log", "android", "EGL", "GLESv1_CM", "z"])
+//            //
+//            //  NOTE: since libgpg is also linked to the stl:
+//            //  libc++ explicitly follows it in the list of libraries
+//            //  to prevent unresolved stl symbols.
+//            //
+//            ldLibs.addAll(["gpg", "c++_static"])
+//        }
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle-experimental:0.4.0'
+
+    buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles.add(file('proguard-rules.txt'))
+        }
+    }
+    productFlavors {
+//        create("arm7") {
+//            ndk.abiFilters.add("armeabi-v7a")
+//            ndk.ldFlags.add("-L${gpg_sdk_path}/lib/c++/armeabi-v7a".toString())
+//        }
     }
 }
 
-allprojects {
-    repositories {
-        jcenter()
-    }
+
+dependencies {
+    compile 'com.google.android.gms:play-services-games:7.8.0'
+    compile 'com.google.android.gms:play-services-base:7.8.0'
+    compile 'com.google.android.gms:play-services-appstate:7.8.0'
+    compile 'com.google.android.gms:play-services-nearby:7.8.0'
 }
+
